@@ -2,6 +2,7 @@ import style from './Tabs.module.css';
 import {useState, useEffect} from 'react';
 import {assignId} from '../../../utils/generateRandomId';
 import {debounceRaf} from '../../../utils/debounce';
+// import {Text} from '../../../UI/Text/Text';
 
 import {ReactComponent as ArrowIcon} from './img/arrow.svg';
 import {ReactComponent as HomeIcon} from './img/home.svg';

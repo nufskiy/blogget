@@ -1,11 +1,31 @@
 import style from './Content.module.css';
 import PropTypes from 'prop-types';
-import Title from './Title';
+import {Text} from '../../../../../UI/Text/Text';
 
 export const Content = ({title, author}) => (
   <div className={style.content}>
-    <Title title={title}/>
-    <a className={style.linkAuthor} href="#author">{author}</a>
+    <Text As='h2' className={style.title}>
+      <Text
+        As='a'
+        size={18}
+        tsize={24}
+        bold
+        className={style.linkPost}
+        href='#post'
+      >
+        {title}
+      </Text>
+    </Text>
+    <Text
+      As='a'
+      color='orange'
+      size={12}
+      tsize={14}
+      className={style.linkAuthor}
+      href='#author'
+    >
+      {author}
+    </Text>
   </div>
 );
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Avatar from './Avatar';
 import Content from './Content';
 import Rating from './Rating';
-import Time from './Time';
+import Date from './Date';
 import DeleteButton from './DeleteButton';
 
 export const Post = ({postData}) => {
@@ -18,7 +18,7 @@ export const Post = ({postData}) => {
 
       <Rating ups={ups} />
 
-      <Time date={date}/>
+      <Date date={date}/>
 
       <DeleteButton />
     </li>

@@ -9,7 +9,6 @@
   padding-top: 20px;
 }
 
-
 .up,
 .down {
   position: relative;
@@ -33,9 +32,6 @@
 }
 
 .ups {
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 130%;
   color: #8f8f8f;
 }
 
@@ -61,9 +57,5 @@
   .up:hover,
   .down:hover {
     outline-color: #cc6633;
-  }
-
-  .ups {
-    font-size: 16px;
   }
 }
