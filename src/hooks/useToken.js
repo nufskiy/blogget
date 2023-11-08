@@ -21,5 +21,7 @@ export const useToken = (state) => {
     }
   }, []);
 
-  return [token];
+  const delToken = () => localStorage.removeItem('bearer');
+
+  return [token, delToken];
 };

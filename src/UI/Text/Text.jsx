@@ -39,12 +39,13 @@ Text.propTypes = {
   dsize: PropTypes.number,
   className: PropTypes.string,
   children: PropTypes.oneOfType([
+    PropTypes.number,
     PropTypes.string,
     PropTypes.object,
     PropTypes.array,
   ]),
   href: PropTypes.string,
   center: PropTypes.bool,
-  medium: PropTypes.string,
-  bold: PropTypes.string,
+  medium: PropTypes.bool,
+  bold: PropTypes.bool,
 };

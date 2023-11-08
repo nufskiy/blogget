@@ -6,7 +6,7 @@ import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
 
-export const Auth = ({token}) => {
+export const Auth = ({token, delToken}) => {
   const [auth, setAuth] = useState({});
   const [isLogoutButtonShown, setIsLogoutButtonShown] = useState(false);
 
@@ -33,6 +33,11 @@ export const Auth = ({token}) => {
     setIsLogoutButtonShown(!isLogoutButtonShown);
   };
 
+  const logout = () => {
+    delToken();
+    setAuth({});
+  };
+
   return (
     <div className={style.container}>
       {auth.name ? (
@@ -43,7 +48,7 @@ export const Auth = ({token}) => {
             <Text>{auth.name}</Text>
           </button>
           {isLogoutButtonShown && (
-            <button className={style.logout}>Выйти</button>
+            <button className={style.logout} onClick={logout}>Выйти</button>
           )}
         </>
       ) : (
@@ -57,4 +62,5 @@ export const Auth = ({token}) => {
 
 Auth.propTypes = {
   token: PropTypes.string,
+  delToken: PropTypes.func,
 };
