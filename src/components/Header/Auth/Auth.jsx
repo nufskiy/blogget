@@ -54,7 +54,9 @@ export const Auth = ({token, delToken}) => {
             <Text>{auth.name}</Text>
           </button>
           {isLogoutButtonShown && (
-            <button className={style.logout} onClick={logout}>Выйти</button>
+            <button className={style.logout} onClick={logout}>
+              Выйти
+            </button>
           )}
         </>
       ) : (
