@@ -22,7 +22,7 @@ export const useToken = (state) => {
     }
   }, [token]);
 
-  const delToken = () => localStorage.removeItem('bearer');
+  const delToken = () => localStorage.setItem('bearer', '');
 
   return [token, delToken];
 };

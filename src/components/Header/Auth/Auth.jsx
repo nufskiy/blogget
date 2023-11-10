@@ -1,39 +1,14 @@
-import {useState, useEffect} from 'react';
-import {URL_API} from '../../../api/const';
+import {useState} from 'react';
 import style from './Auth.module.css';
 import PropTypes from 'prop-types';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
+import {useAuth} from '../../../hooks/useAuth';
 
 export const Auth = ({token, delToken}) => {
-  const [auth, setAuth] = useState({});
+  const [auth, clearAuth] = useAuth(token);
   const [isLogoutButtonShown, setIsLogoutButtonShown] = useState(false);
-
-  useEffect(() => {
-    if (!token) return;
-
-    fetch(`${URL_API}/api/v1/me`, {
-      headers: {
-        Authorization: `bearer ${token}`
-      },
-    })
-      .then(response => {
-        if (response.status !== 401) {
-          return response.json();
-        }
-        delToken();
-        throw new Error(response.status);
-      })
-      .then(({name, icon_img: iconImg}) => {
-        const img = iconImg.replace(/\?.*$/, '');
-        setAuth({name, img});
-      })
-      .catch((err) => {
-        console.error(err);
-        setAuth({});
-      });
-  }, [token]);
 
   const handleClick = () => {
     setIsLogoutButtonShown(!isLogoutButtonShown);
@@ -41,7 +16,7 @@ export const Auth = ({token, delToken}) => {
 
   const logout = () => {
     delToken();
-    setAuth({});
+    clearAuth();
   };
 
   return (
