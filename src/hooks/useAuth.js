@@ -17,7 +17,7 @@ export const useAuth = () => {
     })
       .then(response => {
         if (response.status === 401) {
-          throw new Error(response.status);
+          throw new Error(response.status.toString());
         }
         return response.json();
       })
