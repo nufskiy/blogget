@@ -8,7 +8,7 @@ export const useToken = (state) => {
       const token = new URLSearchParams(location.hash.substring(1))
         .get('access_token');
       setToken(token);
-      location.replace('/');
+      // location.replace('/');
     }
 
     if (localStorage.getItem('bearer')) {
