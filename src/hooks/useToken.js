@@ -5,23 +5,31 @@ export const useToken = () => {
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    if (location.pathname.includes('/auth') && location.hash !== '') {
+    // eslint-disable-next-line max-len
+    if (location.pathname.includes('/auth') && location.hash !== '') {// на странице после сервера авторизации reddit
       const token = new URLSearchParams(location.hash.substring(1))
-        .get('access_token');
-      setToken(token);
-      // location.replace('/');
+        .get('access_token');// забираем token из url
+      setToken(token);// кладем его в стейт
     }
 
     if (localStorage.getItem('bearer')) {
-      setToken(localStorage.getItem('bearer'));
+      // eslint-disable-next-line max-len
+      setToken(localStorage.getItem('bearer'));// зайдя на любую страницу - забираем token из ls и кладем его в стейт
     }
   }, []);
 
   useEffect(() => {
     if (token) {
-      localStorage.setItem('bearer', token);
+      // eslint-disable-next-line max-len
+      localStorage.setItem('bearer', token);// как только на любой странице в стейте появился токен - кладем его в ls
+      console.log('token положен');
     }
   }, [token]);
+
+  // eslint-disable-next-line max-len
+  if (location.pathname.includes('/auth') && location.hash !== '') {// на странице после сервера авторизации reddit - после всех этих действий уходим от хэша
+    location.href = '/';
+  }
 
   const delToken = () => localStorage.setItem('bearer', '');
 
