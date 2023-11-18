@@ -8,17 +8,24 @@ import Date from './Date';
 import DeleteButton from './DeleteButton';
 
 export const Post = ({postData}) => {
-  const {title, author, ups, created, permalink, thumbnail} = postData;
+  const {
+    title,
+    author,
+    ups,
+    created: date,
+    thumbnail,
+    selftext: markdown,
+  } = postData;
 
   return (
     <li className={style.post}>
       <Avatar title={title} src={thumbnail} />
 
-      <Content title={title} url={permalink} author={author} />
+      <Content title={title} author={author} markdown={markdown} />
 
       <Rating ups={ups} />
 
-      <Date date={created}/>
+      <Date date={date}/>
 
       <DeleteButton />
     </li>
