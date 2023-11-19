@@ -9,19 +9,19 @@ import DeleteButton from './DeleteButton';
 
 export const Post = ({postData}) => {
   const {
+    id,
     title,
     author,
     ups,
     created: date,
     thumbnail,
-    selftext: markdown,
   } = postData;
 
   return (
     <li className={style.post}>
       <Avatar title={title} src={thumbnail} />
 
-      <Content title={title} author={author} markdown={markdown} />
+      <Content title={title} author={author} id={id} />
 
       <Rating ups={ups} />
 
