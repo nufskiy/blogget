@@ -15,7 +15,7 @@ export const Text = prop => {
     center,
     medium,
     bold,
-    onClick
+    onClick,
   } = prop;
 
   const classes = classNames(

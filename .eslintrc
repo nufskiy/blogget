@@ -116,7 +116,7 @@
     "func-call-spacing": "error",
     "indent": [
       "error",
-      2,
+      "tab",
       {
         "CallExpression": {
           "arguments": 1
