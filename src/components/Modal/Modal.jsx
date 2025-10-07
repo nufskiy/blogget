@@ -9,77 +9,77 @@ import FormComment from './FormComment';
 import Comments from './Comments';
 
 export const Modal = ({id, closeModal}) => {
-  const data = useCommentsData(id);
-  const post = data.length !== 0 ? data[0] : {};
-  const comments = data.length !== 0 ? data[1] : [];
+	const data = useCommentsData(id);
+	const post = data.length !== 0 ? data[0] : {};
+	const comments = data.length !== 0 ? data[1] : [];
 
-  const overlayRef = useRef(null);
-  const closeRef = useRef(null);
+	const overlayRef = useRef(null);
+	const closeRef = useRef(null);
 
-  const handleClick = ({target}) => {
-    if (target === overlayRef.current ||
-      target.closest('button') === closeRef.current) {
-      closeModal();
-    }
-  };
-  const handleKeydown = ({keyCode}) => {
-    if (keyCode === 27) {
-      closeModal();
-    }
-  };
+	const handleClick = ({target}) => {
+		if (target === overlayRef.current ||
+			target.closest('button') === closeRef.current) {
+			closeModal();
+		}
+	};
+	const handleKeydown = ({keyCode}) => {
+		if (keyCode === 27) {
+			closeModal();
+		}
+	};
 
-  useEffect(() => {
-    document.addEventListener('click', handleClick);
-    document.addEventListener('keydown', handleKeydown);
+	useEffect(() => {
+		document.addEventListener('click', handleClick);
+		document.addEventListener('keydown', handleKeydown);
 
-    return () => {
-      document.removeEventListener('click', handleClick);
-      document.removeEventListener('keydown', handleKeydown);
-    };
-  }, []);
+		return () => {
+			document.removeEventListener('click', handleClick);
+			document.removeEventListener('keydown', handleKeydown);
+		};
+	}, []);
 
-  return createPortal(
-    <div className={style.overlay} ref={overlayRef}>
-      <div className={style.modal}>
+	return createPortal(
+		<div className={style.overlay} ref={overlayRef}>
+			<div className={style.modal}>
 
-        {data.length === 0 && <p>Загрузка...</p>}
+				{data.length === 0 && <p>Загрузка...</p>}
 
-        {data.length !== 0 && (
-          <>
-            <h2 className={style.title}>{post.title}</h2>
+				{data.length !== 0 && (
+					<>
+						<h2 className={style.title}>{post.title}</h2>
 
-            <div className={style.content}>
-              <Markdown options={{
-                overrides: {
-                  a: {
-                    props: {
-                      target: '_blank'
-                    },
-                  },
-                },
-              }}>
-                {post.selftext}
-              </Markdown>
-            </div>
+						<div className={style.content}>
+							<Markdown options={{
+								overrides: {
+									a: {
+										props: {
+											target: '_blank'
+										},
+									},
+								},
+							}}>
+								{post.selftext}
+							</Markdown>
+						</div>
 
-            <p className={style.author}>{post.author}</p>
+						<p className={style.author}>{post.author}</p>
 
-            <FormComment />
+						<FormComment />
 
-            <Comments comments={comments} />
-          </>)
-        }
+						<Comments comments={comments} />
+					</>)
+				}
 
-        <button className={style.close} ref={closeRef}>
-          <CloseIcon />
-        </button>
-      </div>
-    </div>,
-    document.getElementById('modal_root'),
-  );
+				<button className={style.close} ref={closeRef}>
+					<CloseIcon />
+				</button>
+			</div>
+		</div>,
+		document.getElementById('modal_root'),
+	);
 };
 
 Modal.propTypes = {
-  id: PropTypes.string,
-  closeModal: PropTypes.func
+	id: PropTypes.string,
+	closeModal: PropTypes.func
 };

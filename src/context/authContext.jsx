@@ -6,15 +6,15 @@ export const authContext = React.createContext({});
 
 // прослойка, которая оформляет провайдера контекста
 export const AuthContextProvider = ({children}) => {
-  const [auth, clearAuth] = useAuth();
+	const [auth, clearAuth] = useAuth();
 
-  return (
-    <authContext.Provider value={{auth, clearAuth}}>
-      {children}
-    </authContext.Provider>
-  );
+	return (
+		<authContext.Provider value={{auth, clearAuth}}>
+			{children}
+		</authContext.Provider>
+	);
 };
 
 AuthContextProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+	children: PropTypes.node.isRequired,
 };

@@ -5,16 +5,16 @@ import {AuthContextProvider} from './context/authContext';
 import {PostsContextProvider} from './context/postsContext';
 
 function App() {
-  return (
-    <TokenContextProvider>
-      <AuthContextProvider>
-        <PostsContextProvider>
-          <Header />
-          <Main />
-        </PostsContextProvider>
-      </AuthContextProvider>
-    </TokenContextProvider>
-  );
+	return (
+		<TokenContextProvider>
+			<AuthContextProvider>
+				<PostsContextProvider>
+					<Header />
+					<Main />
+				</PostsContextProvider>
+			</AuthContextProvider>
+		</TokenContextProvider>
+	);
 }
 
 export default App;

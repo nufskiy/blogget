@@ -6,15 +6,15 @@ export const tokenContext = React.createContext({});
 
 // прослойка, которая оформляет провайдера контекста
 export const TokenContextProvider = ({children}) => {
-  const [token, delToken] = useToken();
+	const [token, delToken] = useToken();
 
-  return (
-    <tokenContext.Provider value={{token, delToken}}>
-      {children}
-    </tokenContext.Provider>
-  );
+	return (
+		<tokenContext.Provider value={{token, delToken}}>
+			{children}
+		</tokenContext.Provider>
+	);
 };
 
 TokenContextProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+	children: PropTypes.node.isRequired,
 };

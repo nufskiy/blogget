@@ -8,30 +8,30 @@ import Date from './Date';
 import DeleteButton from './DeleteButton';
 
 export const Post = ({postData}) => {
-  const {
-    id,
-    title,
-    author,
-    ups,
-    created: date,
-    thumbnail,
-  } = postData;
+	const {
+		id,
+		title,
+		author,
+		ups,
+		created: date,
+		thumbnail,
+	} = postData;
 
-  return (
-    <li className={style.post}>
-      <Avatar title={title} src={thumbnail} />
+	return (
+		<li className={style.post}>
+			<Avatar title={title} src={thumbnail} />
 
-      <Content title={title} author={author} id={id} />
+			<Content title={title} author={author} id={id} />
 
-      <Rating ups={ups} />
+			<Rating ups={ups} />
 
-      <Date date={date}/>
+			<Date date={date}/>
 
-      <DeleteButton />
-    </li>
-  );
+			<DeleteButton />
+		</li>
+	);
 };
 
 Post.propTypes = {
-  postData: PropTypes.object,
+	postData: PropTypes.object,
 };

@@ -6,14 +6,14 @@ export const postsContext = React.createContext([]);
 
 // прослойка, которая оформляет провайдера контекста
 export const PostsContextProvider = ({children}) => {
-  const bestPosts = useBestPosts();
-  return (
-    <postsContext.Provider value={bestPosts}>
-      {children}
-    </postsContext.Provider>
-  );
+	const bestPosts = useBestPosts();
+	return (
+		<postsContext.Provider value={bestPosts}>
+			{children}
+		</postsContext.Provider>
+	);
 };
 
 PostsContextProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+	children: PropTypes.node.isRequired,
 };
