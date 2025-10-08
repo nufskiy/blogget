@@ -4,15 +4,15 @@ import Post from './Post';
 import {postsContext} from '../../../context/postsContext';
 
 export const List = () => {
-  const posts = useContext(postsContext);
+	const posts = useContext(postsContext);
 
-  return (
-    <ul className={style.list}>
-      {
-        posts.map(({data}) => (
-          <Post key={data.id} postData={data} />
-        ))
-      }
-    </ul>
-  );
+	return (
+		<ul className={style.list}>
+			{
+				posts.map(({data}) => (
+					<Post key={data.id} postData={data} />
+				))
+			}
+		</ul>
+	);
 };

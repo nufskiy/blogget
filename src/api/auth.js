@@ -1,10 +1,10 @@
 import {
-  URL_AUTH,
-  CLIENT_ID,
-  RESPONSE_TYPE,
-  RANDOM_STRING,
-  REDIRECT_URI,
-  SCOPE,
+	URL_AUTH,
+	CLIENT_ID,
+	RESPONSE_TYPE,
+	RANDOM_STRING,
+	REDIRECT_URI,
+	SCOPE,
 } from './const';
 
 const searchParams = new URLSearchParams('');
