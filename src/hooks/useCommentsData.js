@@ -33,7 +33,9 @@ export const useCommentsData = (id) => {
 						},
 					},
 				]) => {
-					const comments = children.map(item => item.data);
+					const comments = children.
+						filter(item => item.kind === 't1')
+						.map(item => item.data);
 					setCommentsData([post, comments]);
 				},
 			)
