@@ -39,6 +39,17 @@
   color: var(--orange);
 }
 
+.btn-send {
+  display: block;
+  margin-right: auto;
+  padding: 10px 20px;
+  border-radius: 8px;
+  outline: none;
+  background-color: var(--orange);
+  color: var(--white);
+  border: 1px solid transparent;
+}
+
 .close {
   position: absolute;
   top: 15px;

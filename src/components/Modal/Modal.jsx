@@ -3,12 +3,14 @@ import {ReactComponent as CloseIcon} from './img/close.svg';
 import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import {createPortal} from 'react-dom';
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, useState} from 'react';
 import {useCommentsData} from '../../hooks/useCommentsData';
 import FormComment from './FormComment';
 import Comments from './Comments';
 
 export const Modal = ({id, closeModal}) => {
+	const [isFormShown, setIsFormShown] = useState(false);
+
 	const data = useCommentsData(id);
 	const post = data.length !== 0 ? data[0] : {};
 	const comments = data.length !== 0 ? data[1] : [];
@@ -26,6 +28,11 @@ export const Modal = ({id, closeModal}) => {
 		if (keyCode === 27) {
 			closeModal();
 		}
+	};
+
+	const handleShow = (e) => {
+		e.preventDefault();
+		setIsFormShown(true);
 	};
 
 	useEffect(() => {
@@ -64,7 +71,15 @@ export const Modal = ({id, closeModal}) => {
 
 						<p className={style.author}>{post.author}</p>
 
-						<FormComment />
+						{!isFormShown &&
+							<button
+								className={style['btn-send']}
+								onClick={handleShow}>
+							Написать комментарий</button>
+						}
+						{isFormShown && (
+							<FormComment />
+						)}
 
 						<Comments comments={comments} />
 					</>)
