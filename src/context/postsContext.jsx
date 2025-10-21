@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useBestPosts} from '../hooks/useBestPosts';
+import { useBestPosts } from '../hooks/useBestPosts';
 
 export const postsContext = React.createContext([]);
 
 // прослойка, которая оформляет провайдера контекста
-export const PostsContextProvider = ({children}) => {
+export const PostsContextProvider = ({ children }) => {
 	const bestPosts = useBestPosts();
 	return (
-		<postsContext.Provider value={bestPosts}>
+		<postsContext.Provider value={ bestPosts }>
 			{children}
 		</postsContext.Provider>
 	);

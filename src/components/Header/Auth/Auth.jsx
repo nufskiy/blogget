@@ -1,23 +1,23 @@
-import {useState, useContext} from 'react';
+import { useState, useContext } from 'react';
 import style from './Auth.module.css';
-import {ReactComponent as LoginIcon} from './img/login.svg';
-import {urlAuth} from '../../../api/auth';
-import {Text} from '../../../UI/Text';
-import {tokenContext} from '../../../context/tokenContext';
-import {authContext} from '../../../context/authContext';
+import { ReactComponent as LoginIcon } from './img/login.svg';
+import { urlAuth } from '../../../api/auth';
+import { Text } from '../../../UI/Text';
+import { authContext } from '../../../context/authContext';
+import { deleteToken } from '../../../store';
+import { useDispatch } from 'react-redux';
 
 export const Auth = () => {
-	const {delToken} = useContext(tokenContext);
 	const {auth, clearAuth} = useContext(authContext);
 	const [isLogoutButtonShown, setIsLogoutButtonShown] = useState(false);
-
+	const dispatch = useDispatch();
 
 	const handleClick = () => {
 		setIsLogoutButtonShown(!isLogoutButtonShown);
 	};
 
 	const logout = () => {
-		delToken();
+		dispatch(deleteToken());
 		clearAuth();
 	};
 
