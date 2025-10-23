@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { URL_API } from '../api/const';
-import { deleteToken } from '../store';
+import { deleteToken } from '../store/tokenReducer';
 import { useDispatch } from 'react-redux';
 import { getToken } from '../api/token';
 

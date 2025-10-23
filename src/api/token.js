@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { updateToken } from '../store';
+import { updateToken } from '../store/tokenReducer';
 
 export const setToken = (token) => {
 	localStorage.setItem('bearer', token);
