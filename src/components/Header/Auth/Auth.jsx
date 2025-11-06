@@ -1,14 +1,15 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import style from './Auth.module.css';
 import { ReactComponent as LoginIcon } from './img/login.svg';
 import { urlAuth } from '../../../api/auth';
 import { Text } from '../../../UI/Text';
-import { authContext } from '../../../context/authContext';
 import { deleteToken } from '../../../store/tokenReducer';
 import { useDispatch } from 'react-redux';
+import { useAuth } from '../../../hooks/useAuth';
+import AuthLoader from './AuthLoader';
 
 export const Auth = () => {
-	const {auth, clearAuth} = useContext(authContext);
+	const [auth, loading, clearAuth] = useAuth();
 	const [isLogoutButtonShown, setIsLogoutButtonShown] = useState(false);
 	const dispatch = useDispatch();
 
@@ -23,21 +24,23 @@ export const Auth = () => {
 
 	return (
 		<div className={style.container}>
-			{auth.name ? (
-		<>
-			<button className={style.btn} onClick={handleClick}>
-				<img className={style.img} src={auth.img}
-					title={auth.name} alt={`Аватар ${auth.name}`} />
-				<Text>{auth.name}</Text>
-			</button>
-			{isLogoutButtonShown && (
-				<button className={style.logout} onClick={logout}>Выйти</button>
-			)}
-		</>
+			{loading ? (
+				<AuthLoader/>
+			) : auth.name ? (
+				<>
+					<button className={style.btn} onClick={handleClick}>
+						<img className={style.img} src={auth.img}
+							title={auth.name} alt={`Аватар ${auth.name}`} />
+						<Text>{auth.name}</Text>
+					</button>
+					{isLogoutButtonShown && (
+						<button className={style.logout} onClick={logout}>Выйти</button>
+					)}
+				</>
 			) : (
-			<Text className={style.authLink} As='a' href={urlAuth}>
-				<LoginIcon className={style.svg} />
-			</Text>
+				<Text className={style.authLink} As='a' href={urlAuth}>
+					<LoginIcon className={style.svg} />
+				</Text>
 			)}
 		</div>
 	);
