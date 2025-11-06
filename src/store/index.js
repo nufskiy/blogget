@@ -2,6 +2,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { tokenMiddleware, tokenReducer } from './tokenReducer';
 import { commentReducer } from './commentReducer';
+import { thunk } from 'redux-thunk';
 
 const rootReducer = combineReducers({
 	tokenReducer,
@@ -10,5 +11,5 @@ const rootReducer = combineReducers({
 
 export const store = createStore(
 	rootReducer,
-	composeWithDevTools(applyMiddleware(tokenMiddleware))
+	composeWithDevTools(applyMiddleware(tokenMiddleware, thunk))
 );

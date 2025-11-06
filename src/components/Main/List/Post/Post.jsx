@@ -23,9 +23,11 @@ export const Post = ({postData}) => {
 
 	if (!preview) {
 		imgSrc = ' http://placebeard.it/100/100';
-	} else if (thumbnail !== 'default') {
+	}
+	else if (thumbnail !== 'default') {
 		imgSrc = thumbnail;
-	} else {
+	}
+	else {
 		imgSrc = preview.images[0].resolutions[0].url;
 	}
 

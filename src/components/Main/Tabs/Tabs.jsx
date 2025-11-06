@@ -25,7 +25,8 @@ export const Tabs = () => {
 	const handleResize = () => {
 		if (document.documentElement.clientWidth < 768) {
 			setIsDropdown(true);
-		} else {
+		}
+		else {
 			setIsDropdown(false);
 		}
 	};
