@@ -1,15 +1,15 @@
 import style from './List.module.css';
 import Post from './Post';
 import { useBestPosts } from '../../../hooks/useBestPosts';
+import Loader from '../../../UI/Loader';
 
 export const List = () => {
-	// eslint-disable-next-line no-unused-vars
 	const { posts, status } = useBestPosts();
 
 	return (
 		<ul className={style.list}>
 			{status === 'loading' &&
-				<></>
+				<Loader purpose='posts'/>
 			}
 			{status === 'loaded' &&
 				posts.map(({data}) => (
