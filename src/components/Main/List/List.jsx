@@ -1,14 +1,17 @@
-import {useContext} from 'react';
 import style from './List.module.css';
 import Post from './Post';
-import {postsContext} from '../../../context/postsContext';
+import { useBestPosts } from '../../../hooks/useBestPosts';
 
 export const List = () => {
-	const posts = useContext(postsContext);
+	// eslint-disable-next-line no-unused-vars
+	const { posts, status } = useBestPosts();
 
 	return (
 		<ul className={style.list}>
-			{
+			{status === 'loading' &&
+				<></>
+			}
+			{status === 'loaded' &&
 				posts.map(({data}) => (
 					<Post key={data.id} postData={data} />
 				))

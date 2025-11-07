@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { authLogout, authRequestAsync } from '../store/auth/action';
+import { authLogout, authRequestAsync } from '../store/auth/authAction';
 
 export const useAuth = () => {
 	const auth = useSelector(state => state.authReducer.data);
