@@ -14,6 +14,10 @@ export const Loader = ({ purpose }) => {
 			color = '#454646';
 			size = 60;
 			break;
+		case 'comments':
+			color = '#454646';
+			size = 100;
+			break;
 		default:
 			color = '#000';
 			size = 30;

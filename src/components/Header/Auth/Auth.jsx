@@ -3,7 +3,7 @@ import style from './Auth.module.css';
 import { ReactComponent as LoginIcon } from './img/login.svg';
 import { urlAuth } from '../../../api/auth';
 import { Text } from '../../../UI/Text';
-import { deleteToken } from '../../../store/tokenReducer';
+import { deleteToken } from '../../../store/token/tokenAction';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../../hooks/useAuth';
 import Loader from '../../../UI/Loader';
