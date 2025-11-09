@@ -3,6 +3,7 @@ import { URL_API } from '../../api/const';
 
 export const POSTS_REQUEST = 'POSTS_REQUEST';
 export const POSTS_REQUEST_SUCCESS = 'POSTS_REQUEST_SUCCESS';
+export const POSTS_REQUEST_SUCCESS_AFTER = 'POSTS_REQUEST_SUCCESS_AFTER';
 export const POSTS_REQUEST_ERROR = 'POSTS_REQUEST_ERROR';
 
 export const postsRequest = () => ({
@@ -11,7 +12,14 @@ export const postsRequest = () => ({
 
 export const postsRequestSuccess = (data) => ({
 	type: POSTS_REQUEST_SUCCESS,
-	data,
+	posts: data.children,
+	after: data.after,
+});
+
+export const postsRequestSuccessAfter = (data) => ({
+	type: POSTS_REQUEST_SUCCESS_AFTER,
+	posts: data.children,
+	after: data.after,
 });
 
 export const postsRequestError = (error) => ({
@@ -21,17 +29,25 @@ export const postsRequestError = (error) => ({
 
 export const postsRequestAsync = () => (dispatch, getState) => {
 	const token = getState().tokenReducer.token;
-	if (!token) return;
+	const after = getState().postsReducer.after;
+	const loading = getState().postsReducer.loading;
+	const isLast = getState().postsReducer.isLast;
+	if (!token || loading || isLast) return;
 
 	dispatch(postsRequest());
 
-	axios(`${URL_API}/top`, {
+	axios(`${URL_API}/top?limit=10${after ? `&after=${after}` : ''}`, {
 		headers: {
 			Authorization: `bearer ${token}`
 		},
 	})
 		.then(({ data }) => {
-			dispatch(postsRequestSuccess(data.data.children));
+			if (after) {
+				dispatch(postsRequestSuccessAfter(data.data));
+			}
+			else {
+				dispatch(postsRequestSuccess(data.data));
+			}
 		})
 		.catch((err) => {
 			console.error(err);
