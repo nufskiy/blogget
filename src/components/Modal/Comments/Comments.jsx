@@ -1,22 +1,22 @@
 import style from './Comments.module.css';
 import PropTypes from 'prop-types';
-import formatDate from '../../../utils/formatDate';
+import { Text } from '../../../UI/Text';
+import Date from '../../Main/List/Post/Date';
 
 export const Comments = ({comments}) => (
-	<div className={style.list}>
-		{comments.length === 0 && <p>Нет комментариев</p>}
-		{comments.length !== 0 &&
-		comments.map(comment => (
-			<div key={comment.id} className={style.item}>
-				<div className={style.author}>{comment.author}</div>
-				<div className={style.comment}>{comment.body}</div>
-				<div className={style.date}>
-					{formatDate(comment.created)}
-				</div>
-			</div>
-		))
-		}
-	</div>
+	<ul className={style.list}>
+		{comments.length ? (
+			comments.map(comment => comment.body && (
+				<li key={comment.id} className={style.item}>
+					<Text className={style.author} As='h3'>{comment.author}</Text>
+					<Text className={style.comment} As='p'>{comment.body}</Text>
+					<Date date={comment.created}/>
+				</li>
+			))
+		) : (
+			<p>Нет комментариев</p>
+		)}
+	</ul>
 );
 
 Comments.propTypes = {

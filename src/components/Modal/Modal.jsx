@@ -8,8 +8,11 @@ import {useCommentsData} from '../../hooks/useCommentsData';
 import FormComment from './FormComment';
 import Comments from './Comments';
 import Loader from '../../UI/Loader';
+import { useParams, useNavigate } from 'react-router-dom';
 
-export const Modal = ({id, closeModal}) => {
+export const Modal = () => {
+	const { id, page } = useParams();
+	const navigate = useNavigate();
 	const [isFormShown, setIsFormShown] = useState(false);
 
 	const { post, comments, status } = useCommentsData(id);
@@ -19,13 +22,14 @@ export const Modal = ({id, closeModal}) => {
 
 	const handleClick = ({target}) => {
 		if (target === overlayRef.current ||
-			target.closest('button') === closeRef.current) {
-			closeModal();
+			target.closest('button') === closeRef.current
+		) {
+			navigate(`/category/${page}`);
 		}
 	};
 	const handleKeydown = ({keyCode}) => {
 		if (keyCode === 27) {
-			closeModal();
+			navigate(`/category/${page}`);
 		}
 	};
 
