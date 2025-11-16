@@ -1,39 +1,8 @@
 import axios from 'axios';
 import { URL_API } from '../../api/const';
+import { postsSlice } from './postsSlice';
 
-export const POSTS_REQUEST = 'POSTS_REQUEST';
-export const POSTS_REQUEST_SUCCESS = 'POSTS_REQUEST_SUCCESS';
-export const POSTS_REQUEST_SUCCESS_AFTER = 'POSTS_REQUEST_SUCCESS_AFTER';
-export const POSTS_REQUEST_ERROR = 'POSTS_REQUEST_ERROR';
-export const CHANGE_PAGE = 'CHANGE_PAGE';
-
-export const postsRequest = () => ({
-	type: POSTS_REQUEST,
-});
-
-export const postsRequestSuccess = (data) => ({
-	type: POSTS_REQUEST_SUCCESS,
-	posts: data.children,
-	after: data.after,
-});
-
-export const postsRequestSuccessAfter = (data) => ({
-	type: POSTS_REQUEST_SUCCESS_AFTER,
-	posts: data.children,
-	after: data.after,
-});
-
-export const postsRequestError = (error) => ({
-	type: POSTS_REQUEST_ERROR,
-	error,
-});
-
-export const changePage = (page) => ({
-	type: CHANGE_PAGE,
-	page,
-});
-
-export const postsRequestAsync = (newPage) => (dispatch, getState) => {
+/* export const postsRequestAsync2 = (newPage) => (dispatch, getState) => {
 	let page = getState().postsReducer.page;
 	if (newPage) {
 		page = newPage;
@@ -64,5 +33,41 @@ export const postsRequestAsync = (newPage) => (dispatch, getState) => {
 		.catch((err) => {
 			console.error(err);
 			dispatch(postsRequestError(err.toString()));
+		});
+}; */
+
+export const postsRequestAsync = (newPage) => (dispatch, getState) => {
+	let page = getState().postsReducer.page;
+	if (newPage) {
+		page = newPage;
+		dispatch(postsSlice.actions.changePage(page));
+	}
+	const token = getState().tokenReducer.token;
+	const after = getState().postsReducer.after;
+	const loading = getState().postsReducer.loading;
+	const isLast = getState().postsReducer.isLast;
+
+	if (!token || loading || isLast) return;
+
+	dispatch(postsSlice.actions.postsRequest());
+
+	axios(`${URL_API}/${page}?limit=10${after ? `&after=${after}` : ''}`, {
+		headers: {
+			Authorization: `bearer ${token}`
+		},
+	})
+		.then(({ data }) => {
+			if (after) {
+				dispatch(postsSlice.actions.postsRequestSuccessAfter(data.data));
+			}
+			else {
+				dispatch(postsSlice.actions.postsRequestSuccess(data.data));
+			}
+		})
+		.catch((error) => {
+			console.error(error);
+			dispatch(
+				postsSlice.actions.postsRequestError({ error: error.toString() })
+			);
 		});
 };
