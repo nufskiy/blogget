@@ -2,7 +2,6 @@ import {
 	COMMENTS_REQUEST,
 	COMMENTS_REQUEST_SUCCESS,
 	COMMENTS_REQUEST_ERROR,
-	UPDATE_COMMENT,
 } from './commentsAction';
 
 const initialState = {
@@ -10,7 +9,6 @@ const initialState = {
 	comments: [],
 	error: '',
 	status: '',
-	newComment: '',
 };
 
 export const commentsReducer = (state = initialState, action) => {
@@ -34,11 +32,6 @@ export const commentsReducer = (state = initialState, action) => {
 				...state,
 				error: action.error,
 				status: 'error',
-			};
-		case UPDATE_COMMENT:
-			return {
-				...state,
-				newComment: action.comment,
 			};
 		default:
 			return state;
