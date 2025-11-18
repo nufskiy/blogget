@@ -35,6 +35,6 @@ export const commentsRequestAsync = createAsyncThunk(
 					return { post, comments };
 				}
 			)
-			.catch((error) => ({ error: error.toString }));
+			.catch((error) => ({ error: error.toString() }));
 	},
 );

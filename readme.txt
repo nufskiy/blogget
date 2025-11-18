@@ -8,3 +8,6 @@ methed/react
 урок 7. контекст
 урок 8. порталы и рефы
 урок 9. redux
+урок 10. redux thunk
+урок 11. react router
+урок 12. redux toolkit. thx https://github.com/jan-web/blogget

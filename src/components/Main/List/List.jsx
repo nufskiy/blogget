@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postsRequestAsync } from '../../../store/posts/postsAction';
 import { useParams, Outlet } from 'react-router-dom';
+import { postsSlice } from '../../../store/posts/postsSlice';
 
 export const List = () => {
 	const posts = useSelector(state => state.postsReducer.posts);
@@ -12,7 +13,8 @@ export const List = () => {
 	const { page } = useParams();
 
 	useEffect(() => {
-		dispatch(postsRequestAsync(page));
+		dispatch(postsSlice.actions.changePage(page));
+		dispatch(postsRequestAsync());
 	}, [page]);
 
 	useEffect(() => {
@@ -21,7 +23,7 @@ export const List = () => {
 				dispatch(postsRequestAsync());
 			}
 		}, {
-			rootMargin: '100px'
+			rootMargin: '100px',
 		});
 
 		observer.observe(endList.current);

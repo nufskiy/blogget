@@ -25,7 +25,7 @@ export const commentsSlice = createSlice({
 				state.status = 'loaded';
 			})
 			.addCase(commentsRequestAsync.rejected, (state, action) => {
-				state.error = action.error;
+				state.error = action.payload.error;
 				state.status = 'error';
 			});
 	}

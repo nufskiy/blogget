@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { postsRequestAsync } from './postsAction';
+import { postsRequestAsync } from './postsAction';
 
 const initialState = {
 	loading: false,
@@ -14,51 +14,31 @@ export const postsSlice = createSlice({
 	name: 'posts',
 	initialState,
 	reducers: {
-		postsRequest: (state) => {
-			state.error = '';
-			state.loading = true;
-		},
-		postsRequestSuccess: (state, action) => {
-			state.posts = action.payload.children;
-			state.error = '';
-			state.loading = false;
-			state.after = action.payload.after;
-			state.isLast = !action.payload.after;
-		},
-		postsRequestSuccessAfter: (state, action) => {
-			state.posts = [...state.posts, ...action.payload.children];
-			state.error = '';
-			state.loading = false;
-			state.after = action.payload.after;
-			state.isLast = !action.payload.after;
-		},
-		postsRequestError: (state, action) => {
-			state.loadingc = false;
-			state.error = action.error;
-		},
 		changePage: (state, action) => {
-			state.page = action.payload.page;
+			state.page = action.payload;
 			state.after = '';
 			state.isLast = false;
+			state.posts = [];
 		},
 	},
-	/* extraReducers: builder => {
+	extraReducers: builder => {
 		builder
 			.addCase(postsRequestAsync.pending, (state) => {
+				state.loading = true;
 				state.error = '';
-				state.status = 'loading';
 			})
 			.addCase(postsRequestAsync.fulfilled, (state, action) => {
-				state.post = action.payload.post;
-				state.comments = action.payload.comments;
+				state.loading = false;
+				state.posts = action.payload.posts;
 				state.error = '';
-				state.status = 'loaded';
+				state.after = action.payload.after;
+				state.isLast = !action.payload.after;
 			})
 			.addCase(postsRequestAsync.rejected, (state, action) => {
-				state.error = action.error;
-				state.status = 'error';
+				state.loading = false;
+				state.error = action.payload.error;
 			});
-	} */
+	}
 });
 
 export default postsSlice.reducer;
