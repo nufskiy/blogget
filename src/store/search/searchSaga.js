@@ -1,24 +1,29 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 import { URL_API } from '../../api/const';
 import axios from 'axios';
-import { searchRequestSuccess, SEARCH_REQUEST } from './searchAction';
+import {
+	searchRequestSuccess,
+	searchRequestError,
+	SEARCH_REQUEST,
+} from './searchAction';
 
-const fetchSearch = async (search, token) => {
-	const request = await axios(`${URL_API}/search?q=${search}`, {
-		headers: {
-			Authorization: `bearer ${token}`,
-		},
-	});
-
-	return request.data;
-};
-
-function* workerSearch(action) {
+function* fetchSearch(search) {
 	const token = yield select(state => state.tokenReducer.token);
-	const { data } = yield fetchSearch(action.search, token);
-	yield put(searchRequestSuccess(data));
+
+	try {
+		const request = yield axios(`${URL_API}/search?q=${search}`, {
+			headers: {
+				Authorization: `bearer ${token}`,
+			},
+		});
+
+		yield put(searchRequestSuccess(request.data.data));
+	}
+	catch (error) {
+		yield put(searchRequestError(error));
+	}
 };
 
 export function* watchSearch() {
-	yield takeLatest(SEARCH_REQUEST, workerSearch);
+	yield takeLatest(SEARCH_REQUEST, fetchSearch);
 };
