@@ -13,9 +13,18 @@ function* fetchPosts({ newPage = '', newQuery = '' }) {
 	const page = yield newPage || select(state => state.postsReducer.page) || '';
 	yield newPage && put(postsSlice.actions.changePage(newPage));
 
+	const {
+		posts: oldPosts,
+		isLast,
+		after: oldAfter,
+	} = yield select((store) => store.postsReducer);
+
+	if (!token || isLast) return;
+
 	try {
 		const response = yield axios(
-			`${URL_API}/${page}${query ? `?q=${query}` : ''}`,
+			// eslint-disable-next-line max-len
+			`${URL_API}/${page}?${oldAfter ? `&after=${oldAfter}` : ''}${query ? `?q=${query}` : ''}`,
 			{
 				headers: {
 					Authorization: `bearer ${token}`,
@@ -23,7 +32,18 @@ function* fetchPosts({ newPage = '', newQuery = '' }) {
 			}
 		);
 
-		yield put(postsSlice.actions.requestSuccess(response.data.data));
+		let newPosts;
+		if (oldAfter) {
+			newPosts = [...oldPosts, ...response.data.data.children];
+		}
+		else {
+			newPosts = response.data.data.children;
+		}
+
+		yield put(postsSlice.actions.requestSuccess({
+			children: newPosts,
+			after: response.data.data.after,
+		}));
 	}
 	catch (error) {
 		yield put(postsSlice.actions.requestError(error));
