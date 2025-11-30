@@ -7,17 +7,19 @@ import {
 	SEARCH_REQUEST,
 } from './searchAction';
 
-function* fetchSearch(search) {
+function* fetchSearch({ search }) {
 	const token = yield select(state => state.tokenReducer.token);
 
 	try {
-		const request = yield axios(`${URL_API}/search?q=${search}`, {
+		const response = yield axios(`${URL_API}/search?q=${search}`, {
 			headers: {
 				Authorization: `bearer ${token}`,
 			},
 		});
 
-		yield put(searchRequestSuccess(request.data.data));
+		console.log(response.data.data);
+
+		yield put(searchRequestSuccess(response.data.data));
 	}
 	catch (error) {
 		yield put(searchRequestError(error));

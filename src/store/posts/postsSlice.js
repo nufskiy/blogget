@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { postsRequestAsync } from './postsAction';
 
 const initialState = {
 	loading: false,
@@ -8,6 +7,7 @@ const initialState = {
 	after: '',
 	isLast: false,
 	page: '',
+	query: '',
 };
 
 export const postsSlice = createSlice({
@@ -19,26 +19,32 @@ export const postsSlice = createSlice({
 			state.after = '';
 			state.isLast = false;
 			state.posts = [];
+			state.query = '';
+		},
+		setQuery: (state, action) => {
+			state.page = 'search';
+			state.query = action.payload;
+			state.posts = [];
+			state.error = '';
+			state.after = '',
+			state.isLast = false;
+		},
+		request: (state) => {
+			state.loading = true;
+			state.error = '';
+		},
+		requestSuccess: (state, action) => {
+			state.loading = false;
+			state.posts = action.payload.children;
+			state.error = '';
+			state.after = action.payload.after;
+			state.isLast = !action.payload.after;
+		},
+		requestError: (state, action) => {
+			state.loading = false;
+			state.error = action.payload.error;
 		},
 	},
-	extraReducers: builder => {
-		builder
-			.addCase(postsRequestAsync.pending, (state) => {
-				state.loading = true;
-				state.error = '';
-			})
-			.addCase(postsRequestAsync.fulfilled, (state, action) => {
-				state.loading = false;
-				state.posts = action.payload.posts;
-				state.error = '';
-				state.after = action.payload.after;
-				state.isLast = !action.payload.after;
-			})
-			.addCase(postsRequestAsync.rejected, (state, action) => {
-				state.loading = false;
-				state.error = action.payload.error;
-			});
-	}
 });
 
 export default postsSlice.reducer;
