@@ -16,20 +16,20 @@ export const postsSlice = createSlice({
 	reducers: {
 		changePage: (state, action) => {
 			state.page = action.payload;
+			if (action.payload !== 'search') {
+				state.query = '';
+			}
 			state.after = '';
 			state.isLast = false;
 			state.posts = [];
-			state.query = '';
 		},
-		setQuery: (state, action) => {
-			state.page = 'search';
-			state.query = action.payload;
-			state.posts = [];
-			state.error = '';
-			state.after = '',
-			state.isLast = false;
-		},
-		request: (state) => {
+		request: (state, action) => {
+			if (typeof action.payload !== 'undefined') {
+				state.query = action.payload.query;
+				state.posts = [];
+				state.after = '',
+				state.isLast = false;
+			}
 			state.loading = true;
 			state.error = '';
 		},

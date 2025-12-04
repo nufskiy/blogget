@@ -8,7 +8,6 @@ function* fetchPosts({ newPage = '', newQuery = '' }) {
 
 	const query = yield newQuery || select(state => state.postsReducer.query) ||
 		'';
-	yield newQuery && put(postsSlice.actions.setQuery(newQuery));
 
 	const page = yield newPage || select(state => state.postsReducer.page) || '';
 	yield newPage && put(postsSlice.actions.changePage(newPage));
@@ -22,9 +21,17 @@ function* fetchPosts({ newPage = '', newQuery = '' }) {
 	if (!token || isLast) return;
 
 	try {
+		const queryString = new URLSearchParams();
+		if (oldAfter) {
+			queryString.append('after', oldAfter);
+		}
+		if (query) {
+			queryString.append('q', query);
+		}
+
 		const response = yield axios(
 			// eslint-disable-next-line max-len
-			`${URL_API}/${page}?${oldAfter ? `&after=${oldAfter}` : ''}${query ? `?q=${query}` : ''}`,
+			`${URL_API}/${page}?${queryString.toString()}`, // TODO: как будто бы q используется только при search
 			{
 				headers: {
 					Authorization: `bearer ${token}`,
@@ -51,6 +58,5 @@ function* fetchPosts({ newPage = '', newQuery = '' }) {
 }
 
 export function* watchPosts() {
-	// TODO: засунуть в postsAction определения для posts/request
 	yield takeLatest('posts/request', fetchPosts);
 }

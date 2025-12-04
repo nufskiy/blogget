@@ -11,3 +11,4 @@ methed/react
 урок 10. redux thunk
 урок 11. react router
 урок 12. redux toolkit. thx https://github.com/jan-web/blogget
+урок 13. redux saga. thx https://github.com/hwnd1982/methed-blogget/commit/01660782e13485a35ecbbf66a2b965309c3afa15
